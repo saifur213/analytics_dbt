@@ -1,5 +1,6 @@
 {{
     config(
+        schema='revenue_dev',
         materialized='incremental',
         unique_key='ORDERID',
         incremental_strategy='merge'
@@ -29,7 +30,7 @@ SELECT
     Updated_at,
     current_timestamp as dbt_updated_at
 
-FROM {{ source('stg', 'orders') }}
+FROM {{ source('revenue_dev', 'orders') }}
 
 {% if is_incremental() %}
 WHERE Updated_at >= (SELECT MAX(Updated_at) FROM {{ this }})
