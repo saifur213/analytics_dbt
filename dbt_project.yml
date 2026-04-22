@@ -33,19 +33,19 @@ models:
   analytics:
     # Config indicated by + and applies to all files under models/example/
     customers_view:
-      +schema: STG
+      +schema: REVENUE_DEV
 
     orders_stg:
-      +schema: STG
+      +schema: REVENUE_DEV
 
     orderitems_view:
-      +schema: STG
+      +schema: REVENUE_DEV
 
     customerrevenue:
       +materialized: table
 
     orders_fact:
-      +schema: STG
+      +schema: REVENUE_DEV
       +materialized: table
 
     revenue_us_macro_test:

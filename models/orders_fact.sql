@@ -1,3 +1,5 @@
+{{ config(schema='revenue_dev', materialized='table') }}
+
 SELECT
     O.OrderID,
     O.OrderDate,
