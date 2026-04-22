@@ -1,0 +1,8 @@
+version: 2
+
+seeds:
+  - name: salestargets
+    config:
+      column_types:
+        StoreID: NUMBER
+        SalesTarget: NUMBER

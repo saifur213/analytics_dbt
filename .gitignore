@@ -1,0 +1,15 @@
+# dbt artifacts
+target/
+dbt_packages/
+logs/
+bt_internal_packages/
+
+# env
+.venv/
+.env
+
+*.pyc
+.user.yml
+
+# OS
+.DS_Store
