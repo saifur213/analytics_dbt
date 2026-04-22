@@ -38,6 +38,10 @@ source .env
 set +a
 ```
 
+👉 Create snoflake db and initalze db with production like data:
+
+👉 FREE dataset: https://github.com/sleekdata/oms-db-setup
+
 This ensures all environment variables are loaded before executing dbt commands.
 
 ---

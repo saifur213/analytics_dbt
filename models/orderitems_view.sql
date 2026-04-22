@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(schema='revenue_dev', materialized='view') }}
 
 SELECT
     OrderItemID,
@@ -9,4 +9,4 @@ SELECT
     Quantity * UnitPrice AS TotalPrice,
     Updated_at
 FROM
-    {{ source('stg', 'orderitems') }}
+    {{ source('revenue_dev', 'orderitems') }}

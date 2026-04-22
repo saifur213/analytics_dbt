@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}     
+{{ config(schema='revenue_dev', materialized='view') }}     
 
 SELECT
     CustomerID,
@@ -13,4 +13,4 @@ SELECT
     Updated_at,
     CONCAT(FirstName, ' ', LastName) AS CustomerName
 FROM
-    {{ source('stg', 'customers') }}
+    {{ source('revenue_dev', 'customers') }}
