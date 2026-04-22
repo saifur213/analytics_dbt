@@ -2,7 +2,7 @@
 target/
 dbt_packages/
 logs/
-bt_internal_packages/
+dbt_internal_packages/
 
 # env
 .venv/
