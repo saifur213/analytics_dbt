@@ -1,4 +1,4 @@
-{{ config(schema='revenue_dev', materialized='table') }}
+{{ config(materialized='table') }}
 
 SELECT
     OS.CustomerID,
