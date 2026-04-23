@@ -9,4 +9,4 @@ SELECT
     Quantity * UnitPrice AS TotalPrice,
     Updated_at
 FROM
-    {{ source('stg', 'orderitems') }}
+    {{ source('revenue_dev', 'orderitems') }}

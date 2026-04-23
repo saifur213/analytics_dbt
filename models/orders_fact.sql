@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 SELECT
     O.OrderID,
     O.OrderDate,

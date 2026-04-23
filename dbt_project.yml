@@ -33,19 +33,20 @@ models:
   analytics:
     # Config indicated by + and applies to all files under models/example/
     customers_view:
-      +schema: STG
+      +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
 
     orders_stg:
-      +schema: STG
+      +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
 
     orderitems_view:
-      +schema: STG
+      +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
 
     customerrevenue:
+      +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
       +materialized: table
 
     orders_fact:
-      +schema: STG
+      +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
       +materialized: table
 
     revenue_us_macro_test:

@@ -9,6 +9,19 @@ sources:
       - name: orders
       - name: orderitems
 
+  - name: revenue_dev
+    database: DEV_DB
+    schema: REVENUE_DEV
+    tables:
+      - name: customers
+      - name: orders
+      - name: orderitems
+      - name: dates
+      - name: employees
+      - name: products
+      - name: stores
+      - name: suppliers
+
   - name: prod
     database: TEST_DB
     schema: PROD
