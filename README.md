@@ -11,16 +11,6 @@ dbt test
 
 ---
 
-## 📚 Resources
-
-* Learn more about dbt in the [official docs](https://docs.getdbt.com/docs/introduction)
-* Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-* Join the [Slack community](https://community.getdbt.com/) for live discussions and support
-* Find [dbt events](https://events.getdbt.com) near you
-* Check out the [dbt blog](https://blog.getdbt.com/) for latest news and best practices
-
----
-
 ## ⚙️ Environment Setup (Required before running dbt)
 
 👉 Create .env with the following variables:
@@ -46,12 +36,20 @@ This ensures all environment variables are loaded before executing dbt commands.
 
 ---
 
-## ▶️ Typical workflow
+## ▶️ Deployment Instructions in Snowflake
+
+1. Create a git workspace in snoflake
+
+2. Create API Integration in Snowflake
 
 ```bash
-cd analytics
-set -a
-source .env
-set +a
-dbt run --target dev
+CREATE OR REPLACE API INTEGRATION git_api_integration
+API_PROVIDER = git_https_api
+API_ALLOWED_PREFIXES = ('git_url')
+API_USER_AUTHENTICATION = (TYPE = '')
+ENABLED = TRUE;
 ```
+
+3. Test
+
+4. Deply
