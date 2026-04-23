@@ -1,0 +1,40 @@
+analytics:
+  target: dev
+
+  outputs:
+
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      role: ACCOUNTADMIN
+      database: DEV_DB
+      warehouse: DEV_WH
+      schema: REVENUE_DEV
+      threads: 4
+      authenticator: snowflake
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+
+    ci:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      role: ACCOUNTADMIN
+      database: DEV_DB
+      warehouse: CI_WH
+      schema: CI
+      threads: 4
+      authenticator: snowflake
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      role: ACCOUNTADMIN
+      database: PROD_DB
+      warehouse: PROD_WH
+      schema: REVENUE
+      threads: 8
+      authenticator: snowflake
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
