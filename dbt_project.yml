@@ -49,6 +49,10 @@ models:
       +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
       +materialized: table
 
+    orderitems_uniq:
+      +schema: "{{ 'revenue_dev' if target.name == 'dev' else 'revenue' }}"
+      +materialized: table
+
     revenue_us_macro_test:
       +schema: TRAINING
       +materialized: view
