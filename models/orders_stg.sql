@@ -1,6 +1,5 @@
 {{
     config(
-        schema='revenue_dev',
         materialized='incremental',
         unique_key='ORDERID',
         incremental_strategy='merge'

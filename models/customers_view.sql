@@ -1,4 +1,4 @@
-{{ config(schema='revenue_dev', materialized='view') }}     
+{{ config(materialized='view') }}     
 
 SELECT
     CustomerID,
