@@ -2,12 +2,12 @@ name: dbt CI
 
 on:
   pull_request:
-  paths:
-      - models/**
-      - macros/**
-      - tests/**
-      - dbt_project.yml
-      - packages.yml
+    paths:
+        - models/**
+        - macros/**
+        - tests/**
+        - dbt_project.yml
+        - packages.yml
 
 env:
   SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}

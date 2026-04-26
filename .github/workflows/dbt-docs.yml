@@ -1,12 +1,12 @@
-name: dbt Docs
+# name: dbt Docs
 
-on:
-  workflow_dispatch:
+# on:
+#   workflow_dispatch:
 
-jobs:
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - checkout
-      - dbt docs generate
-      - publish to S3 / GitHub Pages
+# jobs:
+#   docs:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - checkout
+#       - dbt docs generate
+#       - publish to S3 / GitHub Pages
