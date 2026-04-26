@@ -2,12 +2,16 @@ name: dbt CI
 
 on:
   pull_request:
-    # paths:
-    #     - models/**
-    #     - macros/**
-    #     - tests/**
-    #     - dbt_project.yml
-    #     - packages.yml
+    paths:
+        - models/**
+        - macros/**
+        - tests/**
+        - dbt_project.yml
+        - packages.yml
+
+concurrency:
+  group: dbt-ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 env:
   SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
@@ -33,10 +37,6 @@ jobs:
         with:
           path: ~/.cache/pip
           key: pip-${{ runner.os }}-${{ hashFiles('**requirements.txt') }}
-
-      # - name: Install dependencies
-      #   run: |
-      #     pip install dbt-core dbt-snowflake sqlfluff
 
       - name: Install requirements
         run: pip install -r requirements.txt
@@ -107,12 +107,8 @@ jobs:
       - name: Run dbt tests
         run: dbt test --target ci --profiles-dir ~/.dbt
 
-      # - name: Run dbt build
-      #   run: dbt build --target ci --profiles-dir ~/.dbt
+      - name: Run dbt build
+        run: dbt build --target ci --profiles-dir ~/.dbt
 
-      - name: Slim CI Build
-        run: dbt build --target ci --select state:modified+ --defer --state prod_artifacts --profiles-dir ~/.dbt
-
-concurrency:
-  group: dbt-ci-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+      # - name: Slim CI Build
+      #   run: dbt build --target ci --select state:modified+ --defer --state prod_artifacts --profiles-dir ~/.dbt
