@@ -1,36 +1,38 @@
 {{
     config(
         materialized='incremental',
-        unique_key='ORDERID',
+        unique_key='orderid',
         incremental_strategy='merge'
     )
 }}
 
-SELECT
-    OrderID,
-    OrderDate,
-    CustomerID,
-    EmployeeID,
-    StoreID,
-    Status AS StatusCD,
+select
+    src.orderid,
+    src.orderdate,
+    src.customerid,
+    src.employeeid,
+    src.storeid,
+    src.status as statuscd,
+    src.updated_at,
 
-    CASE
-        WHEN Status = '01' THEN 'In Progress'
-        WHEN Status = '02' THEN 'Completed'
-        WHEN Status = '03' THEN 'Cancelled'
-        ELSE NULL
-    END AS StatusDesc,
+    case
+        when src.status = '01' then 'In Progress'
+        when src.status = '02' then 'Completed'
+        when src.status = '03' then 'Cancelled'
+    end as statusdesc,
 
-    CASE
-        WHEN StoreID = 1000 THEN 'Online'
-        ELSE 'In-store'
-    END AS ORDER_CHANNEL,
+    case
+        when src.storeid = 1000 then 'Online'
+        else 'In-store'
+    end as order_channel,
 
-    Updated_at,
     current_timestamp as dbt_updated_at
 
-FROM {{ source('revenue_dev', 'orders') }}
+from {{ source('revenue_dev', 'orders') }} as src
 
 {% if is_incremental() %}
-WHERE Updated_at >= (SELECT MAX(Updated_at) FROM {{ this }})
+    where src.updated_at >= (
+        select max(tgt.updated_at)
+        from {{ this }} as tgt
+    )
 {% endif %}
