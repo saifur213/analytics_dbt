@@ -1,16 +1,16 @@
-{{ config(materialized='view') }}     
+{{ config(materialized='view') }}
 
 SELECT
-    CustomerID,
-    FirstName,
-    LastName,
-    Email,
-    Phone,
-    Address,
-    City,
-    State,
-    ZipCode,
-    Updated_at,
-    CONCAT(FirstName, ' ', LastName) AS CustomerName
+    CUSTOMERID,
+    FIRSTNAME,
+    LASTNAME,
+    EMAIL,
+    PHONE,
+    ADDRESS,
+    CITY,
+    STATE,
+    ZIPCODE,
+    UPDATED_AT,
+    CONCAT(FIRSTNAME, ' ', LASTNAME) AS CUSTOMERNAME
 FROM
     {{ source('revenue_dev', 'customers') }}
