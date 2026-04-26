@@ -1,12 +1,12 @@
 {{ config(materialized='view') }}
 
 SELECT
-    OrderItemID,
-    OrderID,
-    ProductID,
-    Quantity,
-    UnitPrice,
-    Quantity * UnitPrice AS TotalPrice,
-    Updated_at
+    ORDERITEMID,
+    ORDERID,
+    PRODUCTID,
+    QUANTITY,
+    UNITPRICE,
+    UPDATED_AT,
+    QUANTITY * UNITPRICE AS TOTALPRICE
 FROM
     {{ source('revenue_dev', 'orderitems') }}

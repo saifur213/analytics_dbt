@@ -1,4 +1,4 @@
-{{ config(materialized='table')}}
+{{ config(materialized='table') }}
 
 {{ dbt_utils.deduplicate(
     relation=source('revenue_dev', 'orderitems'),
