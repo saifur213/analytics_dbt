@@ -2,6 +2,12 @@ name: dbt CI
 
 on:
   pull_request:
+  paths:
+      - models/**
+      - macros/**
+      - tests/**
+      - dbt_project.yml
+      - packages.yml
 
 env:
   SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
@@ -106,3 +112,7 @@ jobs:
 
       - name: Slim CI Build
         run: dbt build --target ci --select state:modified+ --defer --state prod_artifacts --profiles-dir ~/.dbt
+
+concurrency:
+  group: dbt-ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true

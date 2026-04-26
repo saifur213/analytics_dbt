@@ -97,3 +97,7 @@ jobs:
         with:
           name: prod_artifacts
           path: target/
+
+concurrency:
+  group: dbt-prod-main
+  cancel-in-progress: false
