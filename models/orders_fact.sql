@@ -1,27 +1,28 @@
 {{ config(materialized='table') }}
 
 SELECT
-    O.OrderID,
-    O.OrderDate,
-    O.CustomerID,
-    O.EmployeeID,
-    O.StoreID,
-    O.StatusCD,
-    O.StatusDesc,
-    COUNT(DISTINCT O.OrderID) AS OrderCount,
-    SUM(OI.TotalPrice) AS Revenue,
-    O.Updated_at
+    O.ORDERID,
+    O.ORDERDATE,
+    O.CUSTOMERID,
+    O.EMPLOYEEID,
+    O.STOREID,
+    O.STATUSCD,
+    O.STATUSDESC,
+    O.UPDATED_AT,
+    COUNT(DISTINCT O.ORDERID) AS ORDERCOUNT,
+    SUM(OI.TOTALPRICE) AS REVENUE
 FROM
-    {{ ref('orders_stg') }} O
-JOIN
-    {{ ref('orderitems_view') }} OI ON O.OrderID = OI.OrderID
+    {{ ref('orders_stg') }} AS O
+INNER JOIN
+    {{ ref('orderitems_view') }} AS OI
+    ON O.ORDERID = OI.ORDERID
 
 GROUP BY
-    O.OrderID,
-    O.OrderDate,
-    O.CustomerID,
-    O.EmployeeID,
-    O.StoreID,
-    O.StatusCD,
-    O.StatusDesc,
-    O.Updated_at
+    O.ORDERID,
+    O.ORDERDATE,
+    O.CUSTOMERID,
+    O.EMPLOYEEID,
+    O.STOREID,
+    O.STATUSCD,
+    O.STATUSDESC,
+    O.UPDATED_AT

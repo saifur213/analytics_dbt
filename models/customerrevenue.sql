@@ -1,14 +1,15 @@
 {{ config(materialized='table') }}
 
 SELECT
-    OS.CustomerID,
-    C.CustomerName,
-    SUM(OS.OrderCount) AS OrderCount,
-    SUM(OS.Revenue) AS Revenue
+    OS.CUSTOMERID,
+    C.CUSTOMERNAME,
+    SUM(OS.ORDERCOUNT) AS ORDERCOUNT,
+    SUM(OS.REVENUE) AS REVENUE
 FROM
-    {{ ref('orders_fact') }} OS
-JOIN
-    {{ ref('customers_view') }} C ON OS.CustomerID = C.CustomerID
+    {{ ref('orders_fact') }} AS OS
+INNER JOIN
+    {{ ref('customers_view') }} AS C
+    ON OS.CUSTOMERID = C.CUSTOMERID
 GROUP BY
-    OS.CustomerID,
-    C.CustomerName
+    OS.CUSTOMERID,
+    C.CUSTOMERNAME

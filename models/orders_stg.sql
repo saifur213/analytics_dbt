@@ -7,30 +7,29 @@
 }}
 
 SELECT
-    OrderID,
-    OrderDate,
-    CustomerID,
-    EmployeeID,
-    StoreID,
-    Status AS StatusCD,
+    ORDERID,
+    ORDERDATE,
+    CUSTOMERID,
+    EMPLOYEEID,
+    STOREID,
+    STATUS AS STATUSCD,
+
+    UPDATED_AT,
 
     CASE
-        WHEN Status = '01' THEN 'In Progress'
-        WHEN Status = '02' THEN 'Completed'
-        WHEN Status = '03' THEN 'Cancelled'
-        ELSE NULL
-    END AS StatusDesc,
+        WHEN STATUS = '01' THEN 'In Progress'
+        WHEN STATUS = '02' THEN 'Completed'
+        WHEN STATUS = '03' THEN 'Cancelled'
+    END AS STATUSDESC,
 
     CASE
-        WHEN StoreID = 1000 THEN 'Online'
+        WHEN STOREID = 1000 THEN 'Online'
         ELSE 'In-store'
     END AS ORDER_CHANNEL,
-
-    Updated_at,
-    current_timestamp as dbt_updated_at
+    current_timestamp AS DBT_UPDATED_AT
 
 FROM {{ source('revenue_dev', 'orders') }}
 
 {% if is_incremental() %}
-WHERE Updated_at >= (SELECT MAX(Updated_at) FROM {{ this }})
+    WHERE UPDATED_AT >= (SELECT max(UPDATED_AT) FROM {{ this }})
 {% endif %}
