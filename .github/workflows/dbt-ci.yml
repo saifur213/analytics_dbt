@@ -104,9 +104,6 @@ jobs:
       - name: Validate dbt project
         run: dbt parse --profiles-dir ~/.dbt
 
-      - name: Run dbt tests
-        run: dbt test --target ci --profiles-dir ~/.dbt
-
       - name: Run dbt build
         run: dbt build --target ci --profiles-dir ~/.dbt
 
