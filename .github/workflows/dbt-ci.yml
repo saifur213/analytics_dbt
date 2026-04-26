@@ -1,0 +1,105 @@
+name: dbt CI
+
+on:
+  pull_request:
+
+env:
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+  SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+  SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/snowflake_rsa_key.p8
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ hashFiles('**requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-core dbt-snowflake sqlfluff
+
+      - name: Write private key
+        run: |
+          cat <<EOF > $SNOWFLAKE_PRIVATE_KEY_PATH
+          $SNOWFLAKE_PRIVATE_KEY
+          EOF
+          chmod 600 $SNOWFLAKE_PRIVATE_KEY_PATH
+
+      - name: Create dbt profiles.yml dynamically
+        run: |
+          mkdir -p ~/.dbt
+
+          cat > ~/.dbt/profiles.yml <<EOF
+          analytics:
+            target: ci
+
+            outputs:
+
+              dev:
+                type: snowflake
+                account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+                user: "{{ env_var('SNOWFLAKE_USER') }}"
+                role: ACCOUNTADMIN
+                database: DEV_DB
+                warehouse: DEV_WH
+                schema: REVENUE_DEV
+                threads: 4
+                authenticator: snowflake
+                private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+
+              ci:
+                type: snowflake
+                account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+                user: "{{ env_var('SNOWFLAKE_USER') }}"
+                role: ACCOUNTADMIN
+                database: DEV_DB
+                warehouse: CI_WH
+                schema: CI
+                threads: 4
+                authenticator: snowflake
+                private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+
+              prod:
+                type: snowflake
+                account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+                user: "{{ env_var('SNOWFLAKE_USER') }}"
+                role: ACCOUNTADMIN
+                database: PROD_DB
+                warehouse: PROD_WH
+                schema: REVENUE
+                threads: 8
+                authenticator: snowflake
+                private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+          EOF
+
+      - name: Install dbt packages
+        run: dbt deps --profiles-dir ~/.dbt
+
+      - name: Run SQLFluff lint
+        run: sqlfluff lint models --dialect snowflake
+
+      - name: Validate dbt project
+        run: dbt parse --profiles-dir ~/.dbt
+
+      - name: Run dbt tests
+        run: dbt test --target ci --profiles-dir ~/.dbt
+
+      # - name: Run dbt build
+      #   run: dbt build --target ci --profiles-dir ~/.dbt
+
+      - name: Slim CI Build
+        run: dbt build --target ci --select state:modified+ --defer --state prod_artifacts --profiles-dir ~/.dbt
