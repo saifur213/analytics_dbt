@@ -26,9 +26,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dbt
-        run: |
-          pip install dbt-core dbt-snowflake
+      - name: Install requirements
+        run: pip install -r requirements.txt
 
       - name: Create Snowflake private key file
         run: |
