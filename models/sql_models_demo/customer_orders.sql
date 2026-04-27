@@ -5,8 +5,10 @@ WITH CUSTOMERORDER AS (
         C.CUSTOMERID,
         CONCAT(C.FIRSTNAME, ' ', C.LASTNAME) AS CUSTOMERNAME,
         COUNT(O.ORDERID) AS ORDERCOUNT
-    FROM {{ source('stg', 'customers') }} AS C
-    INNER JOIN {{ source('stg', 'orders') }} AS O ON C.CUSTOMERID = O.CUSTOMERID
+    FROM {{ source('revenue_dev', 'customers') }} AS C
+    INNER JOIN
+        {{ source('revenue_dev', 'orders') }} AS O
+        ON C.CUSTOMERID = O.CUSTOMERID
     GROUP BY C.CUSTOMERID, CUSTOMERNAME
     ORDER BY ORDERCOUNT DESC
 )
