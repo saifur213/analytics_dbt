@@ -1,12 +1,35 @@
-# Welcome to your new dbt project!
+# Welcome to dbt + snowflake project!
 
-## 🚀 Using the starter project
+## ▶️ Project Setup Guide
 
-Try running the following commands:
+👉 Clone the git repo:
 
 ```bash
-dbt run
-dbt test
+git clone https://github.com/saifur213/analytics_dbt.git
+```
+👉 Create virtual environment
+
+```bash
+python -m venv .venv
+```
+
+👉 Install dependency:
+
+```bash
+pip install -r requirements.txt
+```
+👉 Create .env and profiles.yml:
+
+```bash
+cp .env.example .env
+cp profiles.example.yml profiles.yml
+```
+
+👉 Run the following command before push in feature branch:
+
+```bash
+sqlfluff lint models
+sqlfluff fix models
 ```
 
 ---
@@ -28,11 +51,36 @@ source .env
 set +a
 ```
 
-👉 Create snoflake db and initalze db with production like data:
+👉 Create snowflake db and initalze db with production like data:
 
 👉 FREE dataset: https://github.com/sleekdata/oms-db-setup
 
 This ensures all environment variables are loaded before executing dbt commands.
+
+---
+
+## 🚀 Using the starter project
+
+Try running the following commands:
+
+```bash
+dbt run
+dbt test
+dbt debug
+dbt compile
+dbt build
+```
+
+## 🚀 Run the project on docker
+
+Try running the following commands:
+
+```bash
+docker-compose build
+docker-compose run --rm dbt debug
+docker-compose run --rm dbt run --target dev
+docker-compose run --rm dbt build --target ci
+```
 
 ---
 
