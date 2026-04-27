@@ -21,6 +21,7 @@ sources:
       - name: products
       - name: stores
       - name: suppliers
+      - name: customer_orders
 
   - name: prod
     database: TEST_DB
