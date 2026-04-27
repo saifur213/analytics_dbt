@@ -7,13 +7,13 @@ models:
         tests:
           - string_not_empty
 
-  - name: employees_stg
-    description: Staged employees data from order management system (oms), with minor row-level transformations.  
-    columns:
-      - name: JobTitle
-        description: Employee's Job Title based on his current Roles and Responsibilities.      
-        tests:
-          - string_not_empty
+  # - name: employees_stg
+  #   description: Staged employees data from order management system (oms), with minor row-level transformations.  
+  #   columns:
+  #     - name: JobTitle
+  #       description: Employee's Job Title based on his current Roles and Responsibilities.      
+  #       tests:
+  #         - string_not_empty
 
   - name: orders_stg
     description: Staged orders data from order management system (oms), with minor row-level transformations.  
@@ -30,7 +30,7 @@ models:
           - accepted_values:
               values: ['01', '02', '03']
 
-  - name: orderitems_stg
+  - name: orderitems_view
     description: Staged order items data from order management system (oms), with minor row-level transformations.   
     columns:
       - name: OrderID

@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: training
-    database: TEST_DB
+    database: DEV_DB
     schema: TRAINING
     tables:
       - name: trip_bookings
