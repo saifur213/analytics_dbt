@@ -71,6 +71,17 @@ dbt compile
 dbt build
 ```
 
+## 🚀 Run the project on docker
+
+Try running the following commands:
+
+```bash
+docker-compose build
+docker-compose run --rm dbt debug
+docker-compose run --rm dbt run --target dev
+docker-compose run --rm dbt build --target ci
+```
+
 ---
 
 ## ▶️ Deployment Instructions in Snowflake
