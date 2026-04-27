@@ -1,14 +1,6 @@
 version: 2
 
 sources:
-  - name: stg
-    database: TEST_DB
-    schema: STG
-    tables:
-      - name: customers
-      - name: orders
-      - name: orderitems
-
   - name: revenue_dev
     database: DEV_DB
     schema: REVENUE_DEV
@@ -23,12 +15,8 @@ sources:
       - name: suppliers
       - name: customer_orders
 
-  - name: prod
-    database: TEST_DB
-    schema: PROD
-
   - name: training
-    database: TEST_DB
+    database: DEV_DB
     schema: TRAINING
     tables:
       - name: sales_us
@@ -36,5 +24,5 @@ sources:
       - name: sales_india
 
   - name: consumption
-    database: TEST_DB
+    database: DEV_DB
     schema: CONSUMPTION

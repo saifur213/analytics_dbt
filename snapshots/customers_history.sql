@@ -10,6 +10,6 @@
 }}
 
 
-SELECT * FROM {{ source('stg', 'customers') }}
+SELECT * FROM {{ source('revenue_dev', 'customers') }}
 
 {% endsnapshot %}
